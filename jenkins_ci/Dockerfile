@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM openjdk:8-jdk
 LABEL MAINTAINER="ZM"
 
 # Set Environment variables
@@ -17,9 +17,12 @@ RUN groupadd -g ${gid} ${group} \
 
 # Setup the necessary packages
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y openssh-server openjdk-8-jre git maven \
+    && apt-get install --no-install-recommends -y openssh-server git curl maven \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
         -e 's/#SyslogFacility.*/SyslogFacility AUTH/' \
