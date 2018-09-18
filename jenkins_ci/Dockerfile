@@ -10,16 +10,16 @@ ARG JENKINS_AGENT_HOME=/home/${user}
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} \
-    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" \
+    && echo 'jenkins:screencast' | chpasswd
 
 # Setup the necessary packages
 RUN apt-get update \
     && apt-get install --no-install-recommends -y openssh-server openjdk-8-jre git \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
-        -e 's/#RSAAuthentication.*/RSAAuthentication yes/'  \
-        -e 's/#PasswordAuthentication.*/PasswordAuthentication no/' \
         -e 's/#SyslogFacility.*/SyslogFacility AUTH/' \
         -e 's/#LogLevel.*/LogLevel INFO/' && \
     mkdir /var/run/sshd
@@ -29,4 +29,4 @@ WORKDIR "${JENKINS_AGENT_HOME}"
 
 EXPOSE 22
 
-ENTRYPOINT [ "tail", "-f", "/dev/null"]
+CMD ["/usr/sbin/sshd", "-D"]
