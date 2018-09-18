@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+# Define Jenkins Service
+  jenkins-ce:
+    image: 'jenkins/jenkins:lts'
+    hostname: 'jenkins-ce.localhost.com'
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+# Define Gitlab Service
+  gitlab-ce:
+    image: 'gitlab/gitlab-ce:latest'
+    hostname: 'gitlab-ce.localhost.com'
+    ports:
+      - '8888:80'
+      - '8443:443'
+    volumes:
+      - gitlab-ce:/var/opt/gitlab
+
+volumes:
+  jenkins_home:
+  gitlab-ce:
