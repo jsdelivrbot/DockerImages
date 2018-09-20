@@ -18,6 +18,10 @@ RUN groupadd -g ${gid} ${group} \
 # Setup the necessary packages
 RUN apt-get update \
     && apt-get install --no-install-recommends -y openssh-server git curl maven \
+# Install NodeJS
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs \
+# Do clean up
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
