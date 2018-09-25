@@ -7,20 +7,14 @@ services:
       - "50000:50000"
       - "22"
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - jenkins_master:/var/jenkins_home
 
-  jenkins-slave:
+  jenkins-agent:
     build: .
-    image: zm-jenkins-slave-jdk:latest
+    image: zm-jenkins-agent-jdk:latest
     volumes:
-      - jenkins_slave:/home/jenkins
-
-#  jenkins-slave:
-#    image: ubuntu:latest
-#    command: bash -c "tail -f /dev/null"
-#    ports:
-#      - "22"
+      - jenkins_agent:/home/jenkins
 
 volumes:
-  jenkins_home:
-  jenkins_slave:
+  jenkins_master:
+  jenkins_agent:
