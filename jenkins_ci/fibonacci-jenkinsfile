@@ -1,0 +1,6 @@
+node ('agent-01') {
+    stage ('Deploy') {
+        sh '/home/jenkins/fibonacci.sh 5'
+        sh '/home/jenkins/fibonacci.sh 32'
+    }
+}
