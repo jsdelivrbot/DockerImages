@@ -8,14 +8,14 @@ services:
       - '8080:8080'
       - '50000:50000'
     volumes:
-      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins_ci:/var/jenkins_home
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-master:/var/jenkins_home
 
 # Define jenkins agent
   jenkins-agent:
     build: .
     image: zm-jenkins-agent-jdk:latest
     volumes:
-      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins_agent:/home/jenkins
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-agent:/home/jenkins
 
 # Define Gitlab Service
   gitlab-ce:
