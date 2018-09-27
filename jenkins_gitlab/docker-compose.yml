@@ -2,24 +2,25 @@ version: '3'
 
 services:
 # Define Jenkins Service
-  jenkins-ce:
+  jenkins-master:
     image: 'jenkins/jenkins:lts'
-    hostname: 'jenkins-ce.localhost.com'
     ports:
       - '8080:8080'
       - '50000:50000'
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins_ci:/var/jenkins_home
+
+# Define jenkins agent
+  jenkins-agent:
+    build: .
+    image: zm-jenkins-agent-jdk:latest
+    volumes:
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins_agent:/home/jenkins
 
 # Define Gitlab Service
   gitlab-ce:
     image: 'gitlab/gitlab-ce:latest'
-    hostname: 'gitlab-ce.localhost.com'
     ports:
       - '8888:80'
     volumes:
-      - gitlab-ce:/var/opt/gitlab
-
-volumes:
-  jenkins_home:
-  gitlab-ce:
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/gitlab-ce:/var/opt/gitlab
