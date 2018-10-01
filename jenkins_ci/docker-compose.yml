@@ -5,7 +5,6 @@ services:
     ports:
       - "8080:8080"
       - "50000:50000"
-      - "22"
     volumes:
       - jenkins_master:/var/jenkins_home
 
