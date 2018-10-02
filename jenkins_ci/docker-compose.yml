@@ -2,6 +2,7 @@ version: '3'
 services:
   jenkins-master:
     image: jenkins/jenkins:lts
+    restart: unless-stopped
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -12,6 +13,7 @@ services:
   jenkins-agent:
     build: .
     image: zm-jenkins-agent-jdk:latest
+    restart: unless-stopped
     volumes:
       - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-agent:/home/jenkins
     #  - jenkins_agent:/home/jenkins
