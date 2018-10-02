@@ -6,14 +6,16 @@ services:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - jenkins_master:/var/jenkins_home
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-master:/var/jenkins_home
+    #  - jenkins_master:/var/jenkins_home
 
   jenkins-agent:
     build: .
     image: zm-jenkins-agent-jdk:latest
     volumes:
-      - jenkins_agent:/home/jenkins
+      - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-agent:/home/jenkins
+    #  - jenkins_agent:/home/jenkins
 
-volumes:
-  jenkins_master:
-  jenkins_agent:
+#volumes:
+#  jenkins_master:
+#  jenkins_agent:
