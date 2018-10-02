@@ -4,6 +4,7 @@ services:
 # Define Jenkins Service
   jenkins-master:
     image: 'jenkins/jenkins:lts'
+    restart: unless-stopped
     ports:
       - '8080:8080'
       - '50000:50000'
@@ -14,12 +15,14 @@ services:
   jenkins-agent:
     build: .
     image: zm-jenkins-agent-jdk:latest
+    restart: unless-stopped
     volumes:
       - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-agent:/home/jenkins
 
 # Define Gitlab Service
   gitlab-ce:
     image: 'gitlab/gitlab-ce:latest'
+    restart: unless-stopped
     ports:
       - '8888:80'
     volumes:
