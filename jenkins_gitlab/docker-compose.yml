@@ -27,5 +27,6 @@ services:
     restart: unless-stopped
     ports:
       - '8888:80'
+      - '2222:22'
     volumes:
       - /home/zak/DATA-TO-BACKUP/jenkins-ci/gitlab-ce:/var/opt/gitlab
