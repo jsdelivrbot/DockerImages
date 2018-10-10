@@ -19,6 +19,7 @@ services:
     restart: unless-stopped
     volumes:
       - /home/zak/DATA-TO-BACKUP/jenkins-ci/jenkins-agent:/home/jenkins
+      - jenkins_ce:/var/jenkins_home
 
 # Define Gitlab Service
   gitlab-ce:
@@ -30,3 +31,8 @@ services:
       - '2222:22'
     volumes:
       - /home/zak/DATA-TO-BACKUP/jenkins-ci/gitlab-ce:/var/opt/gitlab
+      - gitlab-ce:/var/opt/gitlab
+
+volumes:
+  jenkins_ce:
+  gitlab-ce:
