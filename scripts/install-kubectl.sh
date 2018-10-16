@@ -1,0 +1,21 @@
+#!/bin/sh
+# The script to download and install the latest "minikube" and "kubectl" 
+# and to configure autocompletion.
+
+echo "Download latest - minikube"
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 
+chmod +x minikube 
+sudo mv minikube /usr/local/bin/
+echo ""
+minikube version
+echo ""
+echo "Download latest - kubectl"
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+echo ""
+echo "Kubectl version installed - " $(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+echo ""
+echo "Configure kubectl autocompletion"
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+. ~/.bashrc
